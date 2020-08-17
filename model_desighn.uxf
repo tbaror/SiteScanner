@@ -1,0 +1,20 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notesel</help_text><element><id>UMLClass</id><coordinates><x>148</x><y>64</y><w>270</w><h>170</h></coordinates><panel_attributes>SiteAssest: Class_
+--
+location_name
+lon = models.FloatField()
+ lat = models.FloatField()
+site_ip_range1
+site_ip_range2
+site_ip_range3
+last_scanned
+current_status
+site_rank
+scan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>618</x><y>334</y><w>210</w><h>120</h></coordinates><panel_attributes>_ScanTemplateet: Class_
+--
+scan_options
+scan_script
+output_format</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>340</x><y>220</y><w>30</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>158</x><y>334</y><w>210</w><h>120</h></coordinates><panel_attributes>_ScanSet: Class_
+--
+scan_template
+scan_schedule
+occurence</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>350</x><y>360</y><w>290</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;270;10</additional_attributes></element></diagram>
