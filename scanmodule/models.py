@@ -1,6 +1,36 @@
 from django.db import models
 
 # Create your models here.
+
+
+
+
+class ScanTemplate(models.Model):
+    template_name = models.CharField(max_length=250)
+    scan_options = models.CharField(max_length=250)
+    scan_script = models.CharField(max_length=250)
+
+    NMAP_OUTPUT_CHOICES = [
+    ('XM', 'XML'),
+    ('LS', 'LOGSTASH'),
+    
+    ]
+    output_format = models.CharField(max_length=2,choices=NMAP_OUTPUT_CHOICES,default='XML')
+
+    def __str__(self):
+        return self.template_name
+
+class ScanSet(models.Model):
+    scanset_name = models.CharField(max_length=250)
+    scan_template = models.ForeignKey(ScanTemplate, on_delete=models.RESTRICT)
+    scan_every_min = models.IntegerField()
+    scan_every_days = models.IntegerField()
+
+
+    def __str__(self):
+        return self.scanset_name
+
+
 class SiteAssest(models.Model):
     site_name = models.CharField(max_length=250,blank=False)
     location_name = models.CharField(max_length=250,blank=False)
@@ -24,27 +54,3 @@ class SiteAssest(models.Model):
 
     def __str__(self):
         return self.site_name
-
-class ScanSet(models.Model):
-    scanset_name = models.CharField(max_length=250)
-    scan_template = models.ForeignKey(ScanTemplate, on_delete=models.RESTRICT)
-    scan_schedule =
-
-
-    def __str__(self):
-        return self.scanset_name
-
-class ScanTemplate(models.Model):
-    template_name = models.CharField(max_length=250)
-    scan_options = models.CharField(max_length=250)
-    scan_script = models.CharField(max_length=250)
-
-    NMAP_OUTPUT_CHOICES = [
-    ('XM', 'XML'),
-    ('LS', 'LOGSTASH'),
-    
-    ]
-    output_format = models.CharField(max_length=2,choices=NMAP_OUTPUT_CHOICES,default='XML')
-
-    def __str__(self):
-        return self.template_name
