@@ -51,6 +51,8 @@ class SiteAssest(models.Model):
     site_rank = models.IntegerField()
 
     scan = models.ForeignKey(ScanSet, on_delete=models.RESTRICT)
+    scan_count = models.IntegerField()
+
 
     def __str__(self):
         return self.site_name
