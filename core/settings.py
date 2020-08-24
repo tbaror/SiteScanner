@@ -127,5 +127,7 @@ STATICFILES_DIRS = (
 )
 #############################################################
 #############################################################
+AUTH_USER_MODEL = "scanmodule.UserProfile"
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

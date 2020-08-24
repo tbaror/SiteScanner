@@ -41,7 +41,7 @@ class UserProfile(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    profile_image = models.ImageField(upload_to='images/', default='images/def_user.png')
+    profile_image = models.ImageField(upload_to='images/users', default='images/usersdef_user.png')
     teams_link = models.URLField(blank = True, max_length=200)
     mobile_phone = models.CharField(max_length=16, blank=True)
     user_location = models.CharField(max_length=80, blank=True)
