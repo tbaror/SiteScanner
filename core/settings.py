@@ -30,8 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',  # Enable the inner app
     'scanmodule',
+    'accounting',
 
 ]
 
@@ -67,6 +67,7 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = "accounting.Account"
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
@@ -127,7 +128,7 @@ STATICFILES_DIRS = (
 )
 #############################################################
 #############################################################
-# AUTH_USER_MODEL = "scanmodule.UserProfile"
+# 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
