@@ -16,6 +16,7 @@ PROJECT_DIR = Path(__file__).parent
 SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = config('DEBUG', default=False)
 
 # load production server from .env
@@ -129,6 +130,5 @@ STATICFILES_DIRS = (
 #############################################################
 #############################################################
 # 
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
