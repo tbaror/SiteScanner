@@ -8,10 +8,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse
 from django import template
+from scanmodule.models import SiteAssest
+from django.db.models import Sum
 
 @login_required(login_url="/login/")
 def index(request):
-    return render(request, "index.html")
+    site_obj_count = SiteAssest.objects.aggregate(Sum('scan_count'))
+    return render(request, "index.html",{'site_obj_count':site_obj_count})
 
 @login_required(login_url="/login/")
 def pages(request):
