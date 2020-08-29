@@ -14,7 +14,10 @@ from django.db.models import Sum
 @login_required(login_url="/login/")
 def index(request):
     site_obj_count = SiteAssest.objects.aggregate(Sum('scan_count'))
-    return render(request, "index.html",{'site_obj_count':site_obj_count})
+    positive_rank = SiteAssest.objects.filter(site_rank__lte=5).count()
+    medium_rank = SiteAssest.objects.filter(site_rank__gt=5, site_rank__lte=7).count()
+    bad_rank = SiteAssest.objects.filter(site_rank__gte=8).count()
+    return render(request, "index.html",{'site_obj_count':site_obj_count, 'positive_rank':positive_rank, 'medium_rank':medium_rank, 'bad_rank':bad_rank})
 
 @login_required(login_url="/login/")
 def pages(request):
