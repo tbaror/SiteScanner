@@ -54,3 +54,9 @@ class SiteAssest(models.Model):
 
     def __str__(self):
         return self.site_name
+
+
+class ScanHistory(models.Model):
+    site_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
+    scan_date_record = models.DateTimeField()
+    
