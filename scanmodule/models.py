@@ -21,8 +21,10 @@ class ScanTemplate(models.Model):
 class ScanSet(models.Model):
     scanset_name = models.CharField(max_length=250)
     scan_template = models.ForeignKey(ScanTemplate, on_delete=models.RESTRICT)
-    scan_every_min = models.IntegerField()
-    scan_every_days = models.IntegerField()
+    scan_every_min = models.IntegerField(blank=True, null=True)
+    scan_every_days = models.IntegerField(blank=True, null=True)
+    scan_every_month = models.IntegerField(blank=True, null=True)
+    scan_start_time = models.TimeField(auto_now=False, auto_now_add=False)
 
 
     def __str__(self):
@@ -59,4 +61,10 @@ class SiteAssest(models.Model):
 class ScanHistory(models.Model):
     site_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
     scan_date_record = models.DateTimeField()
+    scan_complete = models.BooleanField(null=True)
+
+    def __str__(self):
+        return str(self.site_name)
+    
+
     
