@@ -62,6 +62,7 @@ class ScanHistory(models.Model):
     site_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
     scan_date_record = models.DateTimeField()
     scan_complete = models.BooleanField(null=True)
+    scan_rank = models.IntegerField(default=0, null=True)
 
     def __str__(self):
         return str(self.site_name)
