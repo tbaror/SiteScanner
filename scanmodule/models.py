@@ -66,6 +66,10 @@ class ScanHistory(models.Model):
 
     def __str__(self):
         return str(self.site_name)
+
+    def monthscan(self):
+        return self.scan_date_record.strftime('%B')
+    
     
 
     

@@ -7,4 +7,4 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         # Total scan query    
-        context['total_scan'] = SiteAssest.objects..count()
+        context['total_scan'] = SiteAssest.objects.count()

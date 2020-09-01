@@ -9,7 +9,7 @@ from django.template import loader
 from django.http import HttpResponse
 from django import template
 from scanmodule.models import SiteAssest, ScanHistory
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.db.models.functions import TruncMonth
 
 @login_required(login_url="/login/")
