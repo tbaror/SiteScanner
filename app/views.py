@@ -18,11 +18,14 @@ def index(request):
     positive_rank = SiteAssest.objects.filter(site_rank__lte=5).count()
     medium_rank = SiteAssest.objects.filter(site_rank__gt=5, site_rank__lte=7).count()
     bad_rank = SiteAssest.objects.filter(site_rank__gte=8).count()
-    agg_month_year = ScanHistory.objects.annotate(month=TruncMonth('scan_date_record'))
+    agg_month_year = ScanHistory.objects.filter(scan_complete=True).annotate(site_name)
+
+    count_scan = SiteAssest.objects.annotate(Count('scanhistory__scan_complete'))
 
     return render(request, "index.html",{'site_obj_count':site_obj_count, 
     'positive_rank':positive_rank, 'medium_rank':medium_rank,
-     'bad_rank':bad_rank, 'agg_month_year':agg_month_year})
+     'bad_rank':bad_rank, 'agg_month_year':agg_month_year,
+     'count_scan':count_scan})
 
 @login_required(login_url="/login/")
 def pages(request):
