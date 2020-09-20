@@ -117,7 +117,7 @@ $(function () {
   // $('#revenue-chart').get(0).getContext('2d');
 
   var salesChartData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: [{% for obj in count_scan  %} '{{ obj.site_name }}', {% endfor %}],
     datasets: [
       {
         label: 'Digital Goods',
@@ -128,7 +128,7 @@ $(function () {
         pointStrokeColor: 'rgba(60,141,188,1)',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(60,141,188,1)',
-        data: [28, 48, 40, 19, 86, 27, 90]
+        data: [{% for obj in count_scan  %} '{{ obj.scanhistory__scan_complete__count }}', {% endfor %}]
       },
       {
         label: 'Electronics',
@@ -139,7 +139,7 @@ $(function () {
         pointStrokeColor: '#c1c7d1',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(220,220,220,1)',
-        data: [65, 59, 80, 81, 56, 55, 40]
+        data: [{% for obj in count_scan  %} '{{ obj.scanhistory__scan_complete__count }}', {% endfor %}]
       }
     ]
   }
@@ -167,7 +167,7 @@ $(function () {
   // This will get the first returned node in the jQuery collection.
   // eslint-disable-next-line no-unused-vars
   var salesChart = new Chart(salesChartCanvas, {
-    type: 'line',
+    type: 'bar',
     data: salesChartData,
     options: salesChartOptions
   })
@@ -182,7 +182,7 @@ $(function () {
     ],
     datasets: [
       {
-        data: [30, 12, 20],
+        data: [{% for obj in count_scan  %} '{{ obj.scanhistory__scan_complete__count }}', {% endfor %}],
         backgroundColor: ['#f56954', '#00a65a', '#f39c12']
       }
     ]
@@ -264,4 +264,4 @@ $(function () {
     data: salesGraphChartData,
     options: salesGraphChartOptions
   })
-})
+});
