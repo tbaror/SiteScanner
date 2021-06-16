@@ -70,6 +70,32 @@ class ScanHistory(models.Model):
     def monthscan(self):
         return self.scan_date_record.strftime('%B')
     
-    
+class HostScanned(models.Model):
+    site_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
+    host_ip_name = models.CharField(max_length=250,blank=True)
+    resolved_hostname = models.CharField(max_length=250,blank=True)
+    resolve_type = models.CharField(max_length=250,blank=True)
+    mac_address = models.CharField(max_length=250,blank=True)
+    mac_addr_type = models.CharField(max_length=250,blank=True)
+    mac_vendor = models.CharField(max_length=250,blank=True)
+    host_state = models.CharField(max_length=50,blank=True)
+    host_state_method = models.CharField(max_length=50,blank=True)
+    host_state_ttl = models.CharField(max_length=50,blank=True)
+
+    def __str__(self):
+        return str(self.host_ip_name)
+
+
+
+class HostOsScanned(models.Model):
+    host_ip_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
+    os_type = models.CharField(max_length=50,blank=True)
+    os_accuracy = models.CharField(max_length=50,blank=True)
+
+
+
+
+
+
 
     
