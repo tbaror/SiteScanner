@@ -104,6 +104,9 @@ class HostOsScanned(models.Model):
     os_type = models.CharField(max_length=50,blank=True)
     os_accuracy = models.CharField(max_length=50,blank=True)
 
+    def __str__(self):
+        return str(self.os_type)
+
 
 class PortDiscovery(models.Model):
     host_ip_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
@@ -113,6 +116,8 @@ class PortDiscovery(models.Model):
     port_scanned_method = models.CharField(max_length=50,blank=True)
     port_scanned_ttle = models.CharField(max_length=50,blank=True)
 
+    def __str__(self):
+        return str(self.portid)
 
 class PortServiceDsocovery(models.Model):
 
@@ -126,6 +131,9 @@ class PortServiceDsocovery(models.Model):
     conf = models.CharField(max_length=50,blank=True)
     service_cpe = models.CharField(max_length=100,blank=True)
 
+    def __str__(self):
+        return str(self.service_name)
+
 class ServiceScript(models.Model):
     service_product = models.ForeignKey(PortServiceDsocovery, on_delete=models.CASCADE)
     name_service = models.CharField(max_length=100,blank=True)
@@ -138,6 +146,9 @@ class ServiceScript(models.Model):
     cvss = models.IntegerField(blank=True, null=True)
     cve_id = models.CharField(max_length=200,blank=True)
     cve_url = models.URLField(max_length=200,blank=True)
+
+    def __str__(self):
+        return str(self.name_service)
     
 
 
