@@ -40,6 +40,11 @@ class SiteAssest(models.Model):
     site_ip_range1 = models.CharField(max_length=250,blank=True)
     site_ip_range2 = models.CharField(max_length=250,blank=True)
     site_ip_range3 = models.CharField(max_length=250,blank=True)
+    #new entry
+    scan_time_start = models.DateField(auto_now_add=False)
+    scan_timestr_start = models.CharField(max_length=250,blank=True)
+
+
     last_scaned = models.DateField(auto_now_add=False)
     TASK_STATUS_CHOICES = [
     ('ID', 'IDLE'),
@@ -92,6 +97,41 @@ class HostOsScanned(models.Model):
     os_type = models.CharField(max_length=50,blank=True)
     os_accuracy = models.CharField(max_length=50,blank=True)
 
+
+class PortDiscovery(models.Model):
+    host_ip_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
+    port_protocol = models.CharField(max_length=50,blank=True)
+    portid = models.IntegerField(blank=True, null=True)
+    port_stat = models.CharField(max_length=50,blank=True)
+    port_scanned_method = models.CharField(max_length=50,blank=True)
+    port_scanned_ttle = models.CharField(max_length=50,blank=True)
+
+
+class PortServiceDsocovery(models.Model):
+
+    portid = models.ForeignKey(PortDiscovery, on_delete=models.CASCADE)
+    service_name = models.CharField(max_length=50,blank=True)
+    service_product = models.CharField(max_length=100,blank=True)
+    Service_version = models.CharField(max_length=100,blank=True)
+    service_extrainfo = models.CharField(max_length=200,blank=True)
+    service_os_related = models.CharField(max_length=50,blank=True)
+    service_method_scanned = models.CharField(max_length=50,blank=True)
+    conf = models.CharField(max_length=50,blank=True)
+    service_cpe = models.CharField(max_length=100,blank=True)
+
+class ServiceScript(models.Model):
+    service_product = models.ForeignKey(PortServiceDsocovery, on_delete=models.CASCADE)
+    name_service = models.CharField(max_length=100,blank=True)
+    banner_raw = models.CharField(max_length=100,blank=True)
+    script_name = models.CharField(max_length=100,blank=True)
+    raw_output = models.CharField(max_length=500,blank=True)
+    cve_cpe = models.CharField(max_length=200,blank=True)
+    is_exploit = models.BooleanField()
+    cve_type = models.CharField(max_length=100,blank=True)
+    cvss = models.IntegerField(blank=True, null=True)
+    cve_id = models.CharField(max_length=200,blank=True)
+    cve_url = models.URLField(max_length=200,blank=True)
+    
 
 
 

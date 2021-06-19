@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'app',
     'scanmodule',
     'accounting',
+    'django_extensions',
 
 ]
 
@@ -133,3 +134,7 @@ STATICFILES_DIRS = (
 # 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
