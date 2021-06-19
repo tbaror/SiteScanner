@@ -43,7 +43,14 @@ class SiteAssest(models.Model):
     #new entry
     scan_time_start = models.DateField(auto_now_add=False)
     scan_timestr_start = models.CharField(max_length=250,blank=True)
+    scan_time_end = models.DateField(auto_now_add=False)
+    scan_timestr_end = models.CharField(max_length=250,blank=True)
+    scan_elapsed = models.IntegerField(blank=True, null=True)
+    scan_exit_resault = models.CharField(max_length=50,blank=True)
+    scan_args = models.CharField(max_length=250,blank=True)
+    nmap_version = models.CharField(max_length=50,blank=True)
 
+    # end new entry
 
     last_scaned = models.DateField(auto_now_add=False)
     TASK_STATUS_CHOICES = [
