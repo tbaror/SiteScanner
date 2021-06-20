@@ -33,6 +33,7 @@ class ScanSet(models.Model):
 
 
 class SiteAssest(models.Model):
+    scan_name = models.CharField(max_length=250,blank=False)
     site_name = models.CharField(max_length=250,blank=False)
     location_name = models.CharField(max_length=250,blank=False)
     # Geo location
@@ -68,7 +69,7 @@ class SiteAssest(models.Model):
 
 
     def __str__(self):
-        return self.site_name
+        return self.scan_name
 
 
 class ScanHistory(models.Model):
@@ -85,7 +86,7 @@ class ScanHistory(models.Model):
         return self.scan_date_record.strftime('%B')
     
 class HostScanned(models.Model):
-    scan_name = models.ForeignKey(ScanHistory, on_delete=models.CASCADE)
+    scan_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
     host_ip_name = models.CharField(max_length=250,blank=True)
     resolved_hostname = models.CharField(max_length=250,blank=True)
     resolve_type = models.CharField(max_length=250,blank=True)
