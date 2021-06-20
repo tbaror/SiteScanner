@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 
 # Create your models here.
@@ -41,9 +42,9 @@ class SiteAssest(models.Model):
     site_ip_range2 = models.CharField(max_length=250,blank=True)
     site_ip_range3 = models.CharField(max_length=250,blank=True)
     #new entry
-    scan_time_start = models.DateField(auto_now_add=False)
+    scan_time_start = models.DateTimeField(default=datetime.date.today())
     scan_timestr_start = models.CharField(max_length=250,blank=True)
-    scan_time_end = models.DateField(auto_now_add=False)
+    scan_time_end = models.DateTimeField(default=datetime.date.today())
     scan_timestr_end = models.CharField(max_length=250,blank=True)
     scan_elapsed = models.IntegerField(blank=True, null=True)
     scan_exit_resault = models.CharField(max_length=50,blank=True)
@@ -75,6 +76,7 @@ class ScanHistory(models.Model):
     scan_date_record = models.DateTimeField()
     scan_complete = models.BooleanField(null=True)
     scan_rank = models.IntegerField(default=0, null=True)
+    scan_name = models.CharField(max_length=250,blank=True,default="DEF")
 
     def __str__(self):
         return str(self.site_name)
@@ -83,7 +85,7 @@ class ScanHistory(models.Model):
         return self.scan_date_record.strftime('%B')
     
 class HostScanned(models.Model):
-    site_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
+    scan_name = models.ForeignKey(ScanHistory, on_delete=models.CASCADE)
     host_ip_name = models.CharField(max_length=250,blank=True)
     resolved_hostname = models.CharField(max_length=250,blank=True)
     resolve_type = models.CharField(max_length=250,blank=True)
