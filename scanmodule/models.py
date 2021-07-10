@@ -103,7 +103,7 @@ class HostScanned(models.Model):
 
 
 class HostOsScanned(models.Model):
-    host_ip_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
+    host_ip_name = models.ForeignKey(HostScanned, on_delete=models.CASCADE)
     os_type = models.CharField(max_length=50,blank=True)
     os_accuracy = models.CharField(max_length=50,blank=True)
 
@@ -112,7 +112,7 @@ class HostOsScanned(models.Model):
 
 
 class PortDiscovery(models.Model):
-    host_ip_name = models.ForeignKey(SiteAssest, on_delete=models.CASCADE)
+    host_ip_name = models.ForeignKey(HostScanned, on_delete=models.CASCADE)
     port_protocol = models.CharField(max_length=50,blank=True)
     portid = models.IntegerField(blank=True, null=True)
     port_stat = models.CharField(max_length=50,blank=True)
