@@ -6,7 +6,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('--scan_name', type=str, help='Scan Name details')
         parser.add_argument('--site_name', type=str, help='Scanned site name.')
-        parser.add_argument('--option1', default='default', help='The option1 value')
+        parser.add_argument('--site_ip_range1', type=str, help='Range scanne')
         parser.add_argument('--option2', action='store_true', help='True if passed.')
 
     def handle(self, *args, **options):
