@@ -2,6 +2,7 @@ import json
 import xmltodict
 from .models import *
 import datetime
+import argparse
 
 
 f = open("nmap_output.xml")
@@ -13,24 +14,30 @@ f.write(json.dumps(xmltodict.parse(xml_content), indent=4, sort_keys=True))
 f.close()
 
 nmap_results = xmltodict.parse(xml_content)
-#nmap_results = xml_content
-""" for port in nmap_results['nmaprun']['host'][0]['ports']['port']:
-    if 'cpe' in port['service']:
-        cpe = port['service']['cpe']
-    else:
-        cpe = "unknown"
-    print(port['@portid'] + " - " + str(cpe)) """
-
-""" for host in nmap_results['nmaprun']:
-  for hst in ['host']:
-    print(hst) """
-""" pairs = nmap_results.items()    
-for key, value in pairs:
-
-    print(key, value ) """
 
 
-#print(nmap_results["nmaprun"]["host"][0]['hostnames']['hostname']['@name'])
+def get_scandetails(c):
+    dt = datetime.datetime.now()
+    scan_date = str(dt.year) + '_' + str(dt.month) + '_' + str(dt.day) + '_' + str(dt.hour) + '_' + str(dt.minute) + '_' + str(dt.second)
+        
+    site_name='Gefen IL'
+    scan_name = 'Gefen'+ '_' + scan_date
+    location_name = 'Gefen Dekel Israel,BeerSheba'
+    lon = 31.263414931238763
+    lat = 34.81140918899447
+    site_ip_range1 = '212.143.237.0/24'
+    can_time_start = nmap_results["nmaprun"]['@start']
+    scan_timestr_start = nmap_results["nmaprun"]['@startstr']
+    scan_args = nmap_results["nmaprun"]['@args']
+    nmap_version = nmap_results["nmaprun"]['@version']
+    scan_time_end = nmap_results["nmaprun"]['runstats']['finished']['@time']
+    scan_timestr_end = nmap_results["nmaprun"]['runstats']['finished']['@timestr']
+    scan_elapsed = nmap_results["nmaprun"]['runstats']['finished']['@elapsed']
+
+        
+
+
+
 
 def get_address(c):
     addlen = (len(nmap_results["nmaprun"]["host"][c]['address']))
@@ -124,10 +131,8 @@ def get_ports(c):
 
 
 
-dt = datetime.datetime.now()
-scan_date = str(dt.year) + '_' + str(dt.month) + '_' + str(dt.day) + '_' + str(dt.hour) + '_' + str(dt.minute) + '_' + str(dt.second)
-new_scan = SiteAssest(scan_name='Gefen'+ '_' + scan_date, site_name='Gefen IL', site_ip_range1='212.143.237.0/24')
-new_scan.save()
+
+
 length = (len(nmap_results["nmaprun"]["host"]))
 for x in range(length):
    # get_address(x)
