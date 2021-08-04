@@ -1,9 +1,9 @@
 import json
 import xmltodict
-from .models import *
 import datetime
 import argparse
-
+import os
+os.system("python manage.py reportingest")
 
 f = open("nmap_output.xml")
 xml_content = f.read()
@@ -16,7 +16,7 @@ f.close()
 nmap_results = xmltodict.parse(xml_content)
 
 
-def get_scandetails(c):
+def get_scandetails():
     dt = datetime.datetime.now()
     scan_date = str(dt.year) + '_' + str(dt.month) + '_' + str(dt.day) + '_' + str(dt.hour) + '_' + str(dt.minute) + '_' + str(dt.second)
         
@@ -134,6 +134,7 @@ def get_ports(c):
 
 
 length = (len(nmap_results["nmaprun"]["host"]))
+
 for x in range(length):
    # get_address(x)
     #get_hostname(x)
