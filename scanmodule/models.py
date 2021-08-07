@@ -55,7 +55,7 @@ class SiteAssest(models.Model):
 
     # end new entry
 
-    last_scaned = models.DateField(auto_now_add=False)
+    last_scaned = models.DateField(auto_now_add=False, null=True)
     TASK_STATUS_CHOICES = [
     ('ID', 'IDLE'),
     ('RU', 'RUNNING'),
@@ -63,7 +63,7 @@ class SiteAssest(models.Model):
     ]
     current_status = models.CharField(max_length=2,choices=TASK_STATUS_CHOICES,default='IDLE')
 
-    site_rank = models.IntegerField()
+    site_rank = models.IntegerField(null=True)
 
     scan = models.ForeignKey(ScanSet, on_delete=models.RESTRICT)
     scan_count = models.IntegerField(default=0)

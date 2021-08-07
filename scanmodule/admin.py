@@ -10,6 +10,7 @@ admin.site.register(HostOsScanned)
 admin.site.register(PortDiscovery)
 admin.site.register(PortServiceDsocovery)
 admin.site.register(ServiceScript)
+admin.site.register(ScanSet)
 
 class HistoryAdmin(admin.ModelAdmin):
     list_display = ('site_name','scan_date_record','scan_complete', 'scan_rank')
