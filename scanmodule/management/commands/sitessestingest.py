@@ -31,6 +31,8 @@ class Command(BaseCommand):
         
 
     def handle(self, *args, **options):
+
+    
         
         scan_site = SiteAssest(
             scan_name=options['scan_name'],
@@ -39,9 +41,9 @@ class Command(BaseCommand):
             lon=float(options['lon']),
             lat=float(options['lat']),
             site_ip_range1=options['site_ip_range1'],
-            scan_time_start=datetime.datetime.fromtimestamp(int(options['scan_time_start'])),
+            scan_time_start=datetime.datetime.utcfromtimestamp(int(options['scan_time_start'])),
             scan_timestr_start=options['scan_timestr_start'],
-            scan_time_end=datetime.datetime.fromtimestamp(int(options['scan_time_end'])),
+            scan_time_end=datetime.datetime.utcfromtimestamp(int(options['scan_time_end'])),
             scan_timestr_end=options['scan_timestr_end'],
             scan_elapsed=float(options['scan_elapsed']),
             scan_args=options['scan_args'],
@@ -49,5 +51,12 @@ class Command(BaseCommand):
             scan_id=1,
             
         )
-        scan_site.save()
+        try:
+
+            scan_site.save()
+            self.stdout.write(self.style.SUCCESS('Success SiteAssest write'))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(e))
+
+
         
