@@ -44,7 +44,7 @@ class NmapResaultOperations():
             " --lon="+lon+" --lat="+lat+" --site_ip_range1="+site_ip_range1+" --scan_time_start="+scan_time_start+ \
             " --scan_timestr_start="+'"'+scan_timestr_start+'"'+" --scan_time_end="+scan_time_end+" --scan_timestr_end="+'"'+scan_timestr_end+'"'+ \
             " --scan_elapsed="+scan_elapsed+" --scan_args="+'"'+scan_args+'"'+" --nmap_version="+nmap_version
-        print(argset)
+        #print(argset)
         os.system("python manage.py sitessestingest "+argset)
             
    
@@ -58,15 +58,31 @@ class NmapResaultOperations():
         addlen = (len(nmap_results["nmaprun"]["host"][jr]['address']))
         print(addlen)
         for ad in range(addlen):
-            if '@addr' in nmap_results['nmaprun']['host'][jr]['address'][ad]:
+           
+            if '@addr' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='ipv4':
                 host_ip_name=nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr']
+           
             if '@name' in nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']:
                 resolved_hostname=nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']['@name']
                 resolve_type=nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']['@type']
                 print(nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype'])
-                if '@vendor' in nmap_results['nmaprun']['host'][jr]['address'][ad]:
-                    print(nmap_results['nmaprun']['host'][jr]['address'][ad]['@vendor'])
-    
+           
+            if '@addrtype' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='mac':
+                    mac_address = nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr']
+                    mac_vendor = nmap_results['nmaprun']['host'][jr]['address'][ad]['@vendor']
+                    mac_addr_type = nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']
+           
+            if '@state' in nmap_results['nmaprun']['host'][jr]['status']:
+                host_state = nmap_results['nmaprun']['host'][jr]['status']['@state']
+                host_state_method = nmap_results['nmaprun']['host'][jr]['status']['@reason']
+                host_state_ttl = nmap_results['nmaprun']['host'][jr]['status']['@reason_ttl']
+            
+            
+            argset= "--host_ip_name="+host_ip_name+ " --resolved_hostname="+resolved_hostname+ " --resolve_type="+resolve_type+ " --mac_address="+mac_address+ \
+                    " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+mac_vendor+ "--host_state"+host_state+ \
+                    " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl
+            print(argset)        
+            os.system("python manage.py ipaddringest "+argset)             
 
 def get_hostname(c):
     
@@ -161,7 +177,7 @@ for x in range(length):
     #get_ports(x)
     
   
-scan_ops.get_scandetails()
+#scan_ops.get_scandetails()
 
 
 
