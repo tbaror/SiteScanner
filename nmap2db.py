@@ -58,17 +58,20 @@ class NmapResaultOperations():
         addlen = (len(nmap_results["nmaprun"]["host"][jr]['address']))
         print(addlen)
         for ad in range(addlen):
-           
+            
             if '@addr' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='ipv4':
                 host_ip_name=nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr']
+                print(nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr'])
            
             if '@name' in nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']:
                 resolved_hostname=nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']['@name']
                 resolve_type=nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']['@type']
+                
                 print(nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype'])
            
-            if '@addrtype' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='mac':
+            if '@addr' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='mac':
                     mac_address = nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr']
+                    print('mac address:', mac_address)
                     mac_vendor = nmap_results['nmaprun']['host'][jr]['address'][ad]['@vendor']
                     mac_addr_type = nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']
            
@@ -78,11 +81,11 @@ class NmapResaultOperations():
                 host_state_ttl = nmap_results['nmaprun']['host'][jr]['status']['@reason_ttl']
             
             
-            argset= "--host_ip_name="+host_ip_name+ " --resolved_hostname="+resolved_hostname+ " --resolve_type="+resolve_type+ " --mac_address="+mac_address+ \
-                    " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+mac_vendor+ "--host_state"+host_state+ \
-                    " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl
-            print(argset)        
-            os.system("python manage.py ipaddringest "+argset)             
+        argset= "--host_ip_name="+host_ip_name+ " --resolved_hostname="+resolved_hostname+ " --resolve_type="+resolve_type+ " --mac_address="+mac_address+ \
+                " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+mac_vendor+ "--host_state"+host_state+ \
+                " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl
+        print(argset)        
+        os.system("python manage.py ipaddringest "+argset)             
 
 def get_hostname(c):
     
