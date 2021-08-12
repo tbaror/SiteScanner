@@ -85,7 +85,7 @@ class NmapResaultOperations():
             
             
         argset= "--host_ip_name="+host_ip_name+ " --resolved_hostname="+resolved_hostname+ " --resolve_type="+resolve_type+ " --mac_address="+mac_address+ \
-                " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+mac_vendor+ " --host_state="+host_state+ \
+                " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+'"'+mac_vendor+'"'+" --host_state="+host_state+ \
                 " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl+ " --scan_name_id="+self.scan_name
         print(argset)        
         os.system("python manage.py ipaddringest "+argset)             

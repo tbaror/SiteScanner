@@ -20,11 +20,14 @@ class Command(BaseCommand):
         parser.add_argument('--host_state_method', type=str, help='host_state_method.')
 
         
-        parser.add_argument('--host_state_ttl', type=str, help='host_state_ttl.')        
+        parser.add_argument('--host_state_ttl', type=str, help='host_state_ttl.') 
+        parser.add_argument('--scan_name_id', type=str, help='Scan asset id.')      
 
     def handle(self, *args, **options):
 
-    
+        scan_name_id=SiteAssest.objects.get(scan_name=options['scan_name_id'])
+        
+        
         
         scan_iphost = HostScanned(
             host_ip_name=options['host_ip_name'],
@@ -37,7 +40,7 @@ class Command(BaseCommand):
             host_state_method=options['host_state_method'],
             host_state_ttl=options['host_state_ttl'],
 
-            scan_name_id=SiteAssest.objects.get(name=options['scan_name_id']),
+            scan_name_id=int(scan_name_id.id),
             
             
         )
@@ -46,6 +49,7 @@ class Command(BaseCommand):
             scan_iphost.save()
             self.stdout.write(self.style.SUCCESS('Success HostScanned write'))
         except Exception as e:
+            print('id scanned',scan_name_id.id)
             self.stdout.write(self.style.ERROR(e))
 
 
