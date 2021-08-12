@@ -61,17 +61,19 @@ class NmapResaultOperations():
             
             if '@addr' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='ipv4':
                 host_ip_name=nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr']
-                print(nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr'])
-           
-            if '@name' in nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']:
-                resolved_hostname=nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']['@name']
-                resolve_type=nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']['@type']
                 
-                print(nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype'])
+            try:           
+                if '@name' in nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']:
+                    resolved_hostname=nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']['@name']
+                    resolve_type=nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']['@type'] 
+            except Exception as e:
+                resolved_hostname = 'non_resolved'
+                resolve_type= 'non_typed'    
+                
            
             if '@addr' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='mac':
                     mac_address = nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr']
-                    print('mac address:', mac_address)
+                    
                     mac_vendor = nmap_results['nmaprun']['host'][jr]['address'][ad]['@vendor']
                     mac_addr_type = nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']
            
