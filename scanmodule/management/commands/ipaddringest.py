@@ -30,12 +30,15 @@ class Command(BaseCommand):
             host_ip_name=options['host_ip_name'],
             resolved_hostname=options['resolved_hostname'],
             resolve_type =options['resolve_type'],
-            mac_address=options['lon'],
-            mac_addr_type=options['lat'],
+            mac_address=options['mac_address'],
+            mac_addr_type=options['mac_addr_type'],
             mac_vendor=options['mac_vendor'],
             host_state=options['host_state'],
             host_state_method=options['host_state_method'],
             host_state_ttl=options['host_state_ttl'],
+
+            scan_name_id=SiteAssest.objects.get(name=options['scan_name_id']),
+            
             
         )
         try:

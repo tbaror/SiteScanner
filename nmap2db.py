@@ -79,13 +79,14 @@ class NmapResaultOperations():
            
             if '@state' in nmap_results['nmaprun']['host'][jr]['status']:
                 host_state = nmap_results['nmaprun']['host'][jr]['status']['@state']
+                print(host_state)
                 host_state_method = nmap_results['nmaprun']['host'][jr]['status']['@reason']
                 host_state_ttl = nmap_results['nmaprun']['host'][jr]['status']['@reason_ttl']
             
             
         argset= "--host_ip_name="+host_ip_name+ " --resolved_hostname="+resolved_hostname+ " --resolve_type="+resolve_type+ " --mac_address="+mac_address+ \
-                " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+mac_vendor+ "--host_state"+host_state+ \
-                " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl
+                " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+mac_vendor+ " --host_state="+host_state+ \
+                " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl+ " --scan_name_id="+self.scan_name
         print(argset)        
         os.system("python manage.py ipaddringest "+argset)             
 
@@ -175,6 +176,7 @@ def get_ports(c):
 length = (len(nmap_results["nmaprun"]["host"]))
 
 scan_ops=NmapResaultOperations()
+scan_ops.get_scandetails()
 for x in range(length):
     scan_ops.get_address(x)
     #get_hostname(x)
