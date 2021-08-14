@@ -107,6 +107,11 @@ class HostOsScanned(models.Model):
     host_ip_name = models.ForeignKey(HostScanned, on_delete=models.CASCADE)
     os_type = models.CharField(max_length=50,blank=True)
     os_accuracy = models.CharField(max_length=50,blank=True)
+    os_name = models.CharField(max_length=300,blank=True)
+    os_fingerprint = models.CharField(max_length=300,blank=True)
+    os_family = models.CharField(max_length=100,blank=True)
+    os_vendor = models.CharField(max_length=100,blank=True)
+    os_cpe = models.CharField(max_length=300,blank=True)
 
     def __str__(self):
         return str(self.os_type)

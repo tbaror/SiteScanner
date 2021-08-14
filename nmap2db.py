@@ -17,6 +17,7 @@ nmap_results = xmltodict.parse(xml_content)
 
 class NmapResaultOperations():
     scan_name = ''
+    host_ip_name_id = ''
     jr = ''
 
 
@@ -61,6 +62,7 @@ class NmapResaultOperations():
             
             if '@addr' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='ipv4':
                 host_ip_name=nmap_results['nmaprun']['host'][jr]['address'][ad]['@addr']
+                self.host_ip_name_id = host_ip_name
                 
             try:           
                 if '@name' in nmap_results['nmaprun']['host'][jr]['hostnames']['hostname']:
@@ -87,8 +89,31 @@ class NmapResaultOperations():
         argset= "--host_ip_name="+host_ip_name+ " --resolved_hostname="+resolved_hostname+ " --resolve_type="+resolve_type+ " --mac_address="+mac_address+ \
                 " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+'"'+mac_vendor+'"'+" --host_state="+host_state+ \
                 " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl+ " --scan_name_id="+self.scan_name
-        print(argset)        
+        #print(argset)        
         os.system("python manage.py ipaddringest "+argset)             
+
+
+
+    def get_osdetection(self,c):
+        if 'osfingerprint' in nmap_results['nmaprun']['host'][c]['os']:
+            print(nmap_results['nmaprun']['host'][c]['os']['osfingerprint']['@fingerprint'])
+        else:
+            print(c,'null')
+            oslen = (len(nmap_results['nmaprun']['host'][c]['os']['osmatch']))
+            if oslen > 4:
+                print('long:', oslen)
+            
+                for ostype in range(oslen):
+                    print('counter:',ostype)
+                    
+                    if '@accuracy' in nmap_results['nmaprun']['host'][c]['os']['osmatch'][ostype]:
+                        print(nmap_results['nmaprun']['host'][c]['os']['osmatch'][ostype]['@accuracy'])
+            else:
+                print(nmap_results['nmaprun']['host'][c]['os']['osmatch']['@name'])
+                print('null')    
+
+
+
 
 def get_hostname(c):
     
@@ -98,7 +123,8 @@ def get_hostname(c):
             print(c,'null')
 
 
-def get_osdetection(c):
+   
+""" def get_osdetection(c):
     
         if 'osfingerprint' in nmap_results['nmaprun']['host'][c]['os']:
             print(nmap_results['nmaprun']['host'][c]['os']['osfingerprint']['@fingerprint'])
@@ -115,7 +141,7 @@ def get_osdetection(c):
                     print(nmap_results['nmaprun']['host'][c]['os']['osmatch'][ostype]['@accuracy'])
         else:
             print(nmap_results['nmaprun']['host'][c]['os']['osmatch']['@name'])
-            print('null')    
+            print('null')     """
             
 def get_ports(c):
     ports_container = nmap_results['nmaprun']['host'][c]['ports']
