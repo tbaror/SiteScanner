@@ -57,7 +57,7 @@ class NmapResaultOperations():
 
     def get_address(self,jr):
         addlen = (len(nmap_results["nmaprun"]["host"][jr]['address']))
-        print(addlen)
+        #print(addlen)
         for ad in range(addlen):
             
             if '@addr' in nmap_results['nmaprun']['host'][jr]['address'][ad] and nmap_results['nmaprun']['host'][jr]['address'][ad]['@addrtype']=='ipv4':
@@ -81,7 +81,7 @@ class NmapResaultOperations():
            
             if '@state' in nmap_results['nmaprun']['host'][jr]['status']:
                 host_state = nmap_results['nmaprun']['host'][jr]['status']['@state']
-                print(host_state)
+                #print(host_state)
                 host_state_method = nmap_results['nmaprun']['host'][jr]['status']['@reason']
                 host_state_ttl = nmap_results['nmaprun']['host'][jr]['status']['@reason_ttl']
             
@@ -90,41 +90,61 @@ class NmapResaultOperations():
                 " --mac_addr_type="+mac_addr_type+ " --mac_vendor="+'"'+mac_vendor+'"'+" --host_state="+host_state+ \
                 " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl+ " --scan_name_id="+self.scan_name
         #print(argset)        
-        os.system("python manage.py ipaddringest "+argset)             
+        os.system("python manage.py ipaddringest "+argset)
+        self.get_osdetection(jr,self.host_ip_name_id)           
 
 
 
     def get_osdetection(self,c, host_ip_name):
 
-        oslen = (len(nmap_results['nmaprun']['host'][c]['os']['osmatch']))
+        oslen =''
+        cpelen = ''
+        #print('counter',str(c))
+        if 'osfingerprint' in nmap_results['nmaprun']['host'][c]['os']:
+            
+            os_fingerprint= nmap_results['nmaprun']['host'][c]['os']['osfingerprint']['@fingerprint']
+            print(os_fingerprint)
+
         if 'osmatch' in nmap_results['nmaprun']['host'][c]['os']:
+            oslen = len(nmap_results['nmaprun']['host'][c]['os']['osmatch'])
             os_name = nmap_results['nmaprun']['host'][c]['os']['osmatch']['@name']
             os_accuracy = nmap_results['nmaprun']['host'][c]['os']['osmatch']['@accuracy']
 
             if 'osclass' in nmap_results['nmaprun']['host'][c]['os']['osmatch']:
-                os_family = nmap_results['nmaprun']['host'][c]['os']['osclass']['@osfamily']
-                os_vendor = nmap_results['nmaprun']['host'][c]['os']['osclass']['@vendor']
-                os_type = nmap_results['nmaprun']['host'][c]['os']['osclass']['@type']
-                os_cpe = nmap_results['nmaprun']['host'][c]['os']['osclass']['cpe']
-        elif oslen > 4:
-
-
-        if 'osfingerprint' in nmap_results['nmaprun']['host'][c]['os']:
-            os_fingerprint = nmap_results['nmaprun']['host'][c]['os']['osfingerprint']['@fingerprint']
-        else:
-            print(c,'null')
-            oslen = (len(nmap_results['nmaprun']['host'][c]['os']['osmatch']))
-            if oslen > 4:
-                print('long:', oslen)
-            
-                for ostype in range(oslen):
-                    print('counter:',ostype)
+                cpelen = len(nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['cpe'])
+                os_family = nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['@osfamily']
+                os_vendor = nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['@vendor']
+                os_type = nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['@type']
+                if cpelen > 1:
+                    os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe'][0]
+                else:
                     
-                    if '@accuracy' in nmap_results['nmaprun']['host'][c]['os']['osmatch'][ostype]:
-                        print(nmap_results['nmaprun']['host'][c]['os']['osmatch'][ostype]['@accuracy'])
-            else:
-                print(nmap_results['nmaprun']['host'][c]['os']['osmatch']['@name'])
-                print('null')    
+                    os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['cpe']
+        elif oslen > 4:
+            os_name = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['@name']
+            os_accuracy = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['@accuracy']
+
+            if 'osclass' in nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]:
+                cpelen = len(nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe'])
+                os_family = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['@osfamily']
+                os_vendor = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['@vendor']
+                os_type = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['@type']
+                if cpelen > 1:
+                    os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe'][0]
+                else:
+                    os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe']
+
+        argset= "--os_type="+'"'+os_type+'"'+" --os_accuracy="+os_accuracy+" --os_name="+'"'+os_name+'"' \
+            " --os_fingerprint="+'"'+os_fingerprint+'"'+" --os_family="+'"'+os_family+'"'+ " --os_family="+'"'+os_family+'"' \
+            " --os_cpe="+'"'+os_cpe+'"'+" --host_ip_name_id="+self.host_ip_name_id  
+
+        #print(argset)        
+        os.system("python manage.py osingest "+argset)    
+
+
+
+
+        
 
 
 
