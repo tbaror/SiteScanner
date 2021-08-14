@@ -94,9 +94,23 @@ class NmapResaultOperations():
 
 
 
-    def get_osdetection(self,c):
+    def get_osdetection(self,c, host_ip_name):
+
+        oslen = (len(nmap_results['nmaprun']['host'][c]['os']['osmatch']))
+        if 'osmatch' in nmap_results['nmaprun']['host'][c]['os']:
+            os_name = nmap_results['nmaprun']['host'][c]['os']['osmatch']['@name']
+            os_accuracy = nmap_results['nmaprun']['host'][c]['os']['osmatch']['@accuracy']
+
+            if 'osclass' in nmap_results['nmaprun']['host'][c]['os']['osmatch']:
+                os_family = nmap_results['nmaprun']['host'][c]['os']['osclass']['@osfamily']
+                os_vendor = nmap_results['nmaprun']['host'][c]['os']['osclass']['@vendor']
+                os_type = nmap_results['nmaprun']['host'][c]['os']['osclass']['@type']
+                os_cpe = nmap_results['nmaprun']['host'][c]['os']['osclass']['cpe']
+        elif oslen > 4:
+
+
         if 'osfingerprint' in nmap_results['nmaprun']['host'][c]['os']:
-            print(nmap_results['nmaprun']['host'][c]['os']['osfingerprint']['@fingerprint'])
+            os_fingerprint = nmap_results['nmaprun']['host'][c]['os']['osfingerprint']['@fingerprint']
         else:
             print(c,'null')
             oslen = (len(nmap_results['nmaprun']['host'][c]['os']['osmatch']))

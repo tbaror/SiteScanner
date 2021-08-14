@@ -27,13 +27,13 @@ class Command(BaseCommand):
         
         
         scan_iphost = HostOsScanned(
-            host_ip_name=options['os_type'],
-            resolved_hostname=options['os_accuracy'],
-            resolve_type =options['os_name'],
-            mac_address=options['os_fingerprint'],
-            mac_addr_type=options['os_family'],
-            mac_vendor=options['os_vendor'],
-            host_state=options['os_cpe'],
+            os_type=options['os_type'],
+            os_accuracy=options['os_accuracy'],
+            os_name =options['os_name'],
+            os_fingerprint=options['os_fingerprint'],
+            os_family=options['os_family'],
+            os_vendor=options['os_vendor'],
+            os_cpe=options['os_cpe'],
             
             host_ip_name_id=int(host_ip_name_id.id),
             
