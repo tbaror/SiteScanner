@@ -1,0 +1,2 @@
+https://stackoverflow.com/questions/9099544/filtering-through-two-foreign-key-relationships-in-django/9099736
+Actor.objects.filter(name="actorname",film__name="filmname", film__studio__name="studioname")
