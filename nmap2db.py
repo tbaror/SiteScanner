@@ -95,32 +95,34 @@ class NmapResaultOperations():
 
 
 
-    def get_osdetection(self,c, host_ip_name):
-
+    def get_osdetection(self,c):
+        print('counter:',c,' ip:',host_ip_name)
         oslen =''
         cpelen = ''
         #print('counter',str(c))
         if 'osfingerprint' in nmap_results['nmaprun']['host'][c]['os']:
             
             os_fingerprint= nmap_results['nmaprun']['host'][c]['os']['osfingerprint']['@fingerprint']
-            print(os_fingerprint)
-
-        if 'osmatch' in nmap_results['nmaprun']['host'][c]['os']:
-            oslen = len(nmap_results['nmaprun']['host'][c]['os']['osmatch'])
-            os_name = nmap_results['nmaprun']['host'][c]['os']['osmatch']['@name']
-            os_accuracy = nmap_results['nmaprun']['host'][c]['os']['osmatch']['@accuracy']
+            #print(os_fingerprint)
+        oslen = len(nmap_results['nmaprun']['host'][c]['os']['osmatch'])
+        if 'osmatch' in nmap_results['nmaprun']['host'][c]['os'] and oslen ==0:
+            
+            os_name = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['@name']
+            os_accuracy = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['@accuracy']
 
             if 'osclass' in nmap_results['nmaprun']['host'][c]['os']['osmatch']:
-                cpelen = len(nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['cpe'])
-                os_family = nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['@osfamily']
-                os_vendor = nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['@vendor']
-                os_type = nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['@type']
+                cpelen = len(nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass']['cpe'])
+                os_family = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass']['@osfamily']
+                os_vendor = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass']['@vendor']
+                os_type = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass']['@type']
+                print('os_type:',os_type)
                 if cpelen > 1:
                     os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe'][0]
                 else:
                     
                     os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch']['osclass']['cpe']
-        elif oslen > 4:
+        elif oslen > 1:
+            print('i am in routine above 1')
             os_name = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['@name']
             os_accuracy = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['@accuracy']
 
@@ -129,16 +131,18 @@ class NmapResaultOperations():
                 os_family = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['@osfamily']
                 os_vendor = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['@vendor']
                 os_type = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['@type']
+                print('os_type_arr:',os_type)
                 if cpelen > 1:
                     os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe'][0]
                 else:
-                    os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe']
-
+                    os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe'][0]
+        
         argset= "--os_type="+'"'+os_type+'"'+" --os_accuracy="+os_accuracy+" --os_name="+'"'+os_name+'"' \
             " --os_fingerprint="+'"'+os_fingerprint+'"'+" --os_family="+'"'+os_family+'"'+ " --os_family="+'"'+os_family+'"' \
-            " --os_cpe="+'"'+os_cpe+'"'+" --host_ip_name_id="+self.host_ip_name_id  
+            " --os_cpe="+'"'+os_cpe+'"'+" --host_ip_name_id="+self.host_ip_name_id+ " --scan_name="+'"'+self.scan_name+'"'
 
-        #print(argset)        
+        print(argset)
+        print(self.host_ip_name_id)
         os.system("python manage.py osingest "+argset)    
 
 

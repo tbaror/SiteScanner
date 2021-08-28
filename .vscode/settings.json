@@ -1,3 +1,12 @@
 {
-    "python.pythonPath": "C:\\Users\\tbaror\\.virtualenvs\\SiteScanner-44EghAR5\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\tbaror\\.virtualenvs\\SiteScanner-44EghAR5\\Scripts\\python.exe",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:SiteScanner}/db.sqlite3",
+            "name": "tesr"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }

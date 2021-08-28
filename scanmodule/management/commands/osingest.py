@@ -6,6 +6,9 @@ class Command(BaseCommand):
     help = 'The help information for this command.'
     
     def add_arguments(self, parser):
+
+
+
         parser.add_argument('--os_type', type=str, help='Opertion system Type.')
         parser.add_argument('--os_accuracy', type=str, help='Opertion system accuracy')
         parser.add_argument('--os_name', type=str, help='Opertion system Name')
@@ -20,9 +23,14 @@ class Command(BaseCommand):
         
         parser.add_argument('--host_ip_name_id', type=str, help='Scan IP id.')      
 
+        parser.add_argument('--scan_name', type=str, help='Scan Name id.')
+
     def handle(self, *args, **options):
 
-        host_ip_name_id=HostScanned.objects.get(host_ip_name=options['scan_name_id'])
+        scan_name_id=SiteAssest.objects.get(scan_name=options['scan_name'])
+        scan_iphost = HostScanned(scan_name=scan_name_id)
+
+        host_ip_name_id=HostScanned.objects.get(host_ip_name=options['host_ip_name_id'])
         
         
         
