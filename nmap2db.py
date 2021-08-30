@@ -91,12 +91,12 @@ class NmapResaultOperations():
                 " --host_state_method="+host_state_method+ " --host_state_ttl="+host_state_ttl+ " --scan_name_id="+self.scan_name
         #print(argset)        
         os.system("python manage.py ipaddringest "+argset)
-        self.get_osdetection(jr,self.host_ip_name_id)           
+        self.get_osdetection(jr)           
 
 
 
     def get_osdetection(self,c):
-        print('counter:',c,' ip:',host_ip_name)
+        print('counter:',c,' ip:',self.host_ip_name_id)
         oslen =''
         cpelen = ''
         #print('counter',str(c))
@@ -125,6 +125,7 @@ class NmapResaultOperations():
             print('i am in routine above 1')
             os_name = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['@name']
             os_accuracy = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['@accuracy']
+            print(os_name)
 
             if 'osclass' in nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]:
                 cpelen = len(nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe'])
