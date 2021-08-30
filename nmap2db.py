@@ -40,7 +40,7 @@ class NmapResaultOperations():
         scan_elapsed = nmap_results["nmaprun"]['runstats']['finished']['@elapsed']
         scan_args = scan_args.replace('"','')
         scan_args = scan_args.replace('\\','')
-        print(scan_args)
+        #print(scan_args)
         argset="--scan_name="+ self.scan_name + " --site_name="+site_name +  " --location_name="+location_name+ \
             " --lon="+lon+" --lat="+lat+" --site_ip_range1="+site_ip_range1+" --scan_time_start="+scan_time_start+ \
             " --scan_timestr_start="+'"'+scan_timestr_start+'"'+" --scan_time_end="+scan_time_end+" --scan_timestr_end="+'"'+scan_timestr_end+'"'+ \

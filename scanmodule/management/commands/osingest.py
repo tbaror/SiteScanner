@@ -26,7 +26,7 @@ class Command(BaseCommand):
         parser.add_argument('--scan_name', type=str, help='Scan Name id.')
 
     def handle(self, *args, **options):
-
+        print(scan_name=options['scan_name'])
         scan_name_id=SiteAssest.objects.get(scan_name=options['scan_name'])
         scan_iphost = HostScanned(scan_name=scan_name_id)
 
