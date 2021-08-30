@@ -30,7 +30,7 @@ class Command(BaseCommand):
         scan_name_id=SiteAssest.objects.get(scan_name=options['scan_name'])
         scan_iphost = HostScanned(scan_name=scan_name_id)
 
-        host_ip_name_id=HostScanned.objects.get(host_ip_name=options['host_ip_name_id'])
+        host_ip_name_id=HostScanned.objects.get(host_ip_name=scan_name_id)
         
         
         
