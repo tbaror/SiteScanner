@@ -26,9 +26,12 @@ class Command(BaseCommand):
         parser.add_argument('--scan_name', type=str, help='Scan Name id.')
 
     def handle(self, *args, **options):
-        print(scan_name=options['scan_name'])
+        print("options['scan_name']:", options['scan_name'])
         scan_name_id=SiteAssest.objects.get(scan_name=options['scan_name'])
+        #print('scan_name_id: ',scan_name_id)
         scan_iphost = HostScanned(scan_name=scan_name_id)
+        #print('scan_iphost: ',scan_iphost)
+        #host_os_scanned = HostOsScanned(host_scanned=scan_iphost)
 
         #host_ip_name_id=HostScanned.objects.get(host_ip_name=scan_name_id)
         
@@ -43,7 +46,7 @@ class Command(BaseCommand):
             os_vendor=options['os_vendor'],
             os_cpe=options['os_cpe'],
             
-            host_ip_name_id=int(host_ip_name_id.id),
+            host_ip_name=scan_iphost,
             
             
         )

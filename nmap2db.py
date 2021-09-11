@@ -138,9 +138,11 @@ class NmapResaultOperations():
                 else:
                     os_cpe = nmap_results['nmaprun']['host'][c]['os']['osmatch'][0]['osclass'][0]['cpe'][0]
         
-        argset= "--os_type="+'"'+os_type+'"'+" --os_accuracy="+os_accuracy+" --os_name="+'"'+os_name+'"' \
-            " --os_fingerprint="+'"'+os_fingerprint+'"'+" --os_family="+'"'+os_family+'"'+ " --os_family="+'"'+os_family+'"' \
-            " --os_cpe="+'"'+os_cpe+'"'+" --host_ip_name_id="+self.host_ip_name_id+ " --scan_name="+'"'+self.scan_name+'"'
+        
+
+        argset= "--os_type="+'"'+os_type+ '"'+ " --os_accuracy="+os_accuracy+ " --os_name="+os_name+ " --os_fingerprint="+os_fingerprint+ \
+                " --os_family="+os_family+ " --os_vendor="+'"'+os_vendor+'"'+" --os_cpe="+os_cpe+ \
+                " --host_ip_name_id="+self.host_ip_name_id+ " --scan_name="+self.scan_name     
 
         print(argset)
         print(self.host_ip_name_id)
